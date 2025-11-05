@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "mainPageHeading": "/src/assets/svg/NEURA.svg",
+        "mainPageSideHeading": "Neural Systems Awaken",
+        "charactersName": "Neura – Neural Ghost",
+        "descriptionText": "A digital realm built on neural links, data pulses, and endless evolution.",
+        "backgroundHuman": "/src/assets/images/human/H01.png",
+        "backgroundMask": "/src/assets/images/mask/M01.png",
+        "backgroundColor": "#fff",
+        "textColor": "#0047AB",
+        "selectionColor": "#ff6b9d"
+    },
+    {
+        "id": 2,
+        "mainPageHeading": "/src/assets/svg/ECHO.svg",
+        "mainPageSideHeading": "Digital Consciousness",
+        "charactersName": "Echo – Data Entity",
+        "descriptionText": "Where algorithms dance with human intuition in perfect harmony.",
+        "backgroundHuman": "/src/assets/images/human/H02.png",
+        "backgroundMask": "/src/assets/images/mask/M01.png",
+        "backgroundColor": "#fff",
+        "textColor": "#00ff88",
+        "selectionColor": "#ff0080"
+    },
+    {
+        "id": 3,
+        "mainPageHeading": "/src/assets/svg/SAGE.svg",
+        "mainPageSideHeading": "Digital Synergy",
+        "charactersName": "Sage – Wisdom Matrix",
+        "descriptionText": "Combining human creativity with computational precision.",
+        "backgroundHuman": "/src/assets/images/human/H07.png",
+        "backgroundMask": "/src/assets/images/mask/M01.png",
+        "backgroundColor": "#fff",
+        "textColor": "#f39c12",
+        "selectionColor": "#e74c3c"
+    }
+]
