@@ -9,7 +9,8 @@
         "backgroundMask": "/src/assets/images/mask/M01.png",
         "backgroundColor": "#fff",
         "textColor": "#0047AB",
-        "selectionColor": "#ff6b9d"
+        "selectionColor": "#ff6b9d",
+        "mouseColor": "#ff00d980"
     },
     {
         "id": 2,
@@ -21,7 +22,8 @@
         "backgroundMask": "/src/assets/images/mask/M01.png",
         "backgroundColor": "#fff",
         "textColor": "#00ff88",
-        "selectionColor": "#ff0080"
+        "selectionColor": "#ff0080",
+        "mouseColor": "#bb00ff80"
     },
     {
         "id": 3,
@@ -33,6 +35,7 @@
         "backgroundMask": "/src/assets/images/mask/M01.png",
         "backgroundColor": "#fff",
         "textColor": "#f39c12",
-        "selectionColor": "#e74c3c"
+        "selectionColor": "#e74c3c",
+        "mouseColor": "#5500ff80"
     }
 ]

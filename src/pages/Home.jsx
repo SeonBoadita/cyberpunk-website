@@ -9,9 +9,27 @@ import Scroll from "../components/Scroll"
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 const Home = ({ val }) => {
-    const { mainPageHeading, mainPageSideHeading, charactersName, descriptionText, backgroundHuman, backgroundMask, backgroundColor, textColor, selectionColor } = val || {};
+    const { mainPageHeading, mainPageSideHeading, charactersName, descriptionText, backgroundHuman, backgroundMask, backgroundColor, textColor, selectionColor, mouseColor } = val || {};
 
     const smootherRef = useRef(null)
+
+
+    useEffect(() => {
+        const pointerHandler = (e) => {
+            gsap.to(".mouse", {
+                x: e.clientX - window.innerWidth * 0.02,
+                y: e.clientY - window.innerWidth * 0.02,
+                ease: "power4.out",
+            });
+        };
+
+        window.addEventListener("mousemove", pointerHandler);
+
+        return () => {
+            window.removeEventListener("mousemove", pointerHandler);
+        };
+    }, []);
+
 
 
 
@@ -148,17 +166,53 @@ const Home = ({ val }) => {
             }
         )
         tl.to(".mask-2", {
-            display: "block"
+            display: "block",
+            scale: 1.1,
         })
+        tl.to(".band", {
+            y: -300
+        }, "<")
 
+        // 1
         tl.to(".mask-2", {
             rotate: 10,
             x: -300,
         })
-        // tl.from(".sub-heading-section2", {
-        //     y: 300,
+        tl.from(".inner-text-1", {
+            y: 300,
+            opacity: 0
+        }, "<")
+        tl.to(".inner-text-1", {
+            opacity: 0
+        })
+        // 2
+        tl.to(".mask-2", {
+            rotate: -10,
+            scale: 1.4,
+            x: 300,
+        })
+        tl.from(".inner-text-2", {
+            y: 300,
+            opacity: 0
+        }, "<")
+        tl.to(".inner-text-2", {
+            opacity: 0
+        })
+
+        // 3
+        tl.to(".mask-2", {
+            rotate: 20,
+            x: -300,
+            scale: 1,
+        })
+        tl.from(".inner-text-3", {
+            y: 300,
+            opacity: 0
+        }, "<")
+        // tl.to(".inner-text-3", {
         //     opacity: 0
-        // }, "<")
+        // })
+
     })
 
 
@@ -172,6 +226,12 @@ const Home = ({ val }) => {
                     }
                 `}
             </style>
+            <div
+                id="mouse"
+                className="mouse fixed top-0 left-0 w-[4vw] h-[4vw] rounded-full backdrop-blur-3xl pointer-events-none z-999"
+                style={{ backgroundColor: mouseColor }}>
+            </div>
+
             <div id="smooth-wrapper" className="overflow-hidden">
                 <div id="smooth-content">
                     <section
@@ -218,7 +278,7 @@ const Home = ({ val }) => {
 
                             {/* scroll band */}
                             <div className="scroller-container -rotate-3 relative top-[4vw] z-60 left-0 h-[2vw]">
-                                <Scroll />
+                                <Scroll bgColor={"bg-pink-300"} />
                             </div>
 
 
@@ -251,7 +311,7 @@ const Home = ({ val }) => {
 
 
                     <section
-                        className="second-section h-screen w-full relative"
+                        className="second-section h-[600vh] w-full relative"
                         style={{
                             backgroundColor: "orange",
                             '--selection-bg': selectionColor,
@@ -259,14 +319,42 @@ const Home = ({ val }) => {
                         }}
                     >
                         <div className="section-2-container relative top-0 left-0 w-full h-screen">
+                            <div className="band absolute top-0 z-999 left-0 w-full h-[4.5vh]">
+                                <Scroll bgColor={"bg-pink-600"} />
+                            </div>
+                            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-2xl bg-pink-600/30 z-1"></div>
+
+                            <div className="background-video">
+                                <video
+                                    className="video absolute w-full z-0 h-full top-0 left-0 object-cover"
+                                    src="src/assets/videos/backgroundImage.mp4"
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                ></video>
+
+                            </div>
                             <div className="image-container-2 absolute rotate-10 bottom-[9.4vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
                                 <div className="images-main-2 relative w-full h-full">
                                     <img src={backgroundMask} alt="" className="mask-2 hidden object-cover absolute top-0 left-0" />
                                 </div>
                             </div>
-                            <div className="text-section2 absolute top-0 right-0 w-full h-full">
-                                <div className="inner-text">
-                                    <h1 className="sub-heading-section2 bg-amber-400 top-[40vh] right-[10vw] w-fit h-full">Hello world</h1>
+                            <div className="text-section2 z-2 relative top-0 right-0 w-full h-full">
+                                <div className="inner-text-1 absolute w-[35vw] h-fit right-[5%] top-[40%] flex flex-col items-start justify-center">
+                                    <h1 className="sub-heading-section2-1 w-fit h-fit text-[1.7vw]">Hello world</h1>
+                                    <p className="paragraph-section2-1 text-[1.3vw]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, sunt, a iure corporis magnam placeat ducimus perspiciatis dicta dolore quia facere ab tenetur reprehenderit officia aliquam dolorem blanditiis commodi dolor.
+                                    </p>
+                                </div>
+                                <div className="inner-text-2 absolute w-[35vw] h-fit left-[5%] top-[40%] flex flex-col items-start justify-center">
+                                    <h1 className="sub-heading-section2-2 w-fit h-fit text-[1.7vw]">Hello world</h1>
+                                    <p className="paragraph-section2-2 text-[1.3vw]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, sunt, a iure corporis magnam placeat ducimus perspiciatis dicta dolore quia facere ab tenetur reprehenderit officia aliquam dolorem blanditiis commodi dolor.
+                                    </p>
+                                </div>
+                                <div className="inner-text-3 absolute w-[35vw] h-fit right-[5%] top-[40%] flex flex-col items-start justify-center">
+                                    <h1 className="sub-heading-section2-3 w-fit h-fit text-[1.7vw]">Hello world</h1>
+                                    <p className="paragraph-section2-3 text-[1.3vw]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, sunt, a iure corporis magnam placeat ducimus perspiciatis dicta dolore quia facere ab tenetur reprehenderit officia aliquam dolorem blanditiis commodi dolor.
+                                    </p>
                                 </div>
                             </div>
                         </div>
