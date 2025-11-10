@@ -55,7 +55,7 @@ const Home = ({ val }) => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: ".mask",
-                markers: true,
+                // markers: true,
                 start: "top-=450vh top",
                 end: "bottom+=275vh top",
                 pin: true,
@@ -86,24 +86,7 @@ const Home = ({ val }) => {
         }
     })
 
-    useGSAP(() => {
-        const tl = gsap.timeline(
-            {
-                scrollTrigger: {
-                    trigger: ".second-section",
-                    markers: true,
-                    scrub: true,
-                    pin: true,
-                    start: "top top",
-                    end: "bottom top",
 
-                }
-            }
-        )
-        tl.to(".mask-2", {
-            display: "block"
-        })
-    })
 
     useEffect(() => {
         window.addEventListener("mousemove", (e) => {
@@ -149,6 +132,36 @@ const Home = ({ val }) => {
 
         })
     })
+
+    useGSAP(() => {
+        const tl = gsap.timeline(
+            {
+                scrollTrigger: {
+                    trigger: ".second-section",
+                    markers: true,
+                    scrub: true,
+                    pin: true,
+                    start: "top-=2.5vh top",
+                    end: "bottom top",
+
+                }
+            }
+        )
+        tl.to(".mask-2", {
+            display: "block"
+        })
+
+        tl.to(".mask-2", {
+            rotate: 10,
+            x: -300,
+        })
+        // tl.from(".sub-heading-section2", {
+        //     y: 300,
+        //     opacity: 0
+        // }, "<")
+    })
+
+
     return (
         <>
             <style>
@@ -245,11 +258,19 @@ const Home = ({ val }) => {
                             '--selection-text': textColor || '#ffffff'
                         }}
                     >
-                        <div className="image-container-2 absolute rotate-10 bottom-[9.6vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
-                            <div className="images-main-2 relative w-full h-full">
-                                <img src={backgroundMask} alt="" className="mask-2 hidden object-cover absolute top-0 left-0" />
+                        <div className="section-2-container relative top-0 left-0 w-full h-screen">
+                            <div className="image-container-2 absolute rotate-10 bottom-[9.4vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
+                                <div className="images-main-2 relative w-full h-full">
+                                    <img src={backgroundMask} alt="" className="mask-2 hidden object-cover absolute top-0 left-0" />
+                                </div>
+                            </div>
+                            <div className="text-section2 absolute top-0 right-0 w-full h-full">
+                                <div className="inner-text">
+                                    <h1 className="sub-heading-section2 bg-amber-400 top-[40vh] right-[10vw] w-fit h-full">Hello world</h1>
+                                </div>
                             </div>
                         </div>
+
                     </section>
                     <div className="third-scroll-section bg-transparent relative top-0 left-0 h-screen w-full"></div>
                 </div>
