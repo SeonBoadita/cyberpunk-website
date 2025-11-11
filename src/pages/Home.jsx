@@ -5,7 +5,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother"
 import Textani from "../components/Textani"
 import { useGSAP } from "@gsap/react"
 import Scroll from "../components/Scroll"
-
+import scrollData from "../json/scrollTexts.json"
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 const Home = ({ val }) => {
@@ -82,9 +82,7 @@ const Home = ({ val }) => {
 
         })
 
-        tl.to(".background-shapes", {
-            opacity: 0
-        })
+        tl.fromTo(".background-shapes", { opacity: 1 }, { opacity: 0 })
 
         tl.to([".human", ".scroller-container"], {
             y: -600,
@@ -161,57 +159,69 @@ const Home = ({ val }) => {
                     pin: true,
                     start: "top-=2.5vh top",
                     end: "bottom top",
-
                 }
             }
         )
         tl.to(".mask-2", {
             display: "block",
-            scale: 1.1,
         })
-        tl.to(".band", {
-            y: -300
+        tl.to(".section-two-cont", {
+            y: -30,
+            backgroundColor: "#030306",
         }, "<")
 
         // 1
         tl.to(".mask-2", {
             rotate: 10,
             x: -300,
-        })
-        tl.from(".inner-text-1", {
-            y: 300,
-            opacity: 0
-        }, "<")
-        tl.to(".inner-text-1", {
-            opacity: 0
-        })
-        // 2
-        tl.to(".mask-2", {
-            rotate: -10,
-            scale: 1.4,
-            x: 300,
-        })
-        tl.from(".inner-text-2", {
-            y: 300,
-            opacity: 0
-        }, "<")
-        tl.to(".inner-text-2", {
-            opacity: 0
-        })
+            y: 90,
+            duration: 2,
+        });
 
-        // 3
-        tl.to(".mask-2", {
-            rotate: 20,
-            x: -300,
-            scale: 1,
-        })
-        tl.from(".inner-text-3", {
-            y: 300,
-            opacity: 0
-        }, "<")
-        // tl.to(".inner-text-3", {
-        //     opacity: 0
-        // })
+        tl.from(".svg-img", {
+            opacity: 0,
+            scale: 0.5,
+        }, ">-=0.2");
+
+        tl.from(".rotor", {
+            opacity: 0,
+            scale: 0.5,
+            ease: "elastic.out"
+        }, ">-=0.2");
+
+        // console.log(scrollData.length);
+        for (let i = 1; i <= scrollData.length; i++) {
+            tl.to(`.scroll-text${i}`, {
+                y: -300,
+                opacity: 1,
+                ease: "power2.inOut",
+                duration: 1
+            });
+            tl.to(`.scroll-text${i}`, {
+                x: -300,
+                y: -900,
+                display: "none",
+                opacity: 0,
+                ease: "power2.inOut",
+                duration: 1
+            });
+            tl.to(".svg-img", {
+                rotate: `+=${360 / scrollData.length}`,
+                ease: "power2.inOut"
+            }, "<");
+            tl.to(".rotor", {
+                rotate: `+=${-360 / scrollData.length}`,
+                ease: "power2.inOut"
+            }, "<");
+
+            // Mask levitation effect
+            tl.to(".mask-2", {
+                y: i % 2 === 0 ? 70 : 90,
+                x: i % 2 === 0 ? -320 : -280,
+                ease: "power2.inOut",
+                duration: 0.5
+            }, "<");
+        }
 
     })
 
@@ -242,6 +252,7 @@ const Home = ({ val }) => {
                             '--selection-text': textColor || '#ffffff'
                         }}
                     >
+
                         <div className="container-section1 w-full h-screen relative top-0 left-0">
 
                             {/* shapes */}
@@ -278,7 +289,7 @@ const Home = ({ val }) => {
 
                             {/* scroll band */}
                             <div className="scroller-container -rotate-3 relative top-[4vw] z-60 left-0 h-[2vw]">
-                                <Scroll bgColor={"bg-pink-300"} />
+                                <Scroll bgColor={"bg-[#e41ff6]"} />
                             </div>
 
 
@@ -311,50 +322,46 @@ const Home = ({ val }) => {
 
 
                     <section
-                        className="second-section h-[600vh] w-full relative"
+                        className="second-section h-[900vh] w-full relative"
                         style={{
-                            backgroundColor: "orange",
                             '--selection-bg': selectionColor,
                             '--selection-text': textColor || '#ffffff'
                         }}
                     >
                         <div className="section-2-container relative top-0 left-0 w-full h-screen">
-                            <div className="band absolute top-0 z-999 left-0 w-full h-[4.5vh]">
-                                <Scroll bgColor={"bg-pink-600"} />
-                            </div>
-                            <div className="absolute top-0 left-0 w-full h-full backdrop-blur-2xl bg-pink-600/30 z-1"></div>
+                            <div className="section-two-cont relative top-0 left-0 w-full h-full rounded-t-4xl backdrop-blur-2xl bg-[#0a060d] border-t-[1.5vh] border-[#ef26e9] z-1">
+                                <div className="image-container-2 absolute rotate-10 bottom-[9.4vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
+                                    <div className="images-main-2 relative w-full h-full">
+                                        <img src={backgroundMask} alt="" className="mask-2 hidden object-cover absolute top-0 left-0" />
+                                    </div>
+                                </div>
+                                <div className="circle-svg z-2 relative top-0 right-0 w-full h-full">
+                                    <div className="svg-container absolute top-[50vh] left-[15vw] w-[30vw] h-[30vw] -translate-y-1/2">
+                                        <img src="src/assets/svg/BackgroundCircles01.svg" alt="svg-img" className="svg-img w-full h-full object-cover" />
+                                    </div>
+                                </div>
 
-                            <div className="background-video">
-                                <video
-                                    className="video absolute w-full z-0 h-full top-0 left-0 object-cover"
-                                    src="src/assets/videos/backgroundImage.mp4"
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                ></video>
+                                <div className="circle-rotate absolute top-0 left-0 w-full h-full z-50 pointer-events-none">
+                                    <div className="rotor-container absolute top-1/2 right-[35vw] w-[80vw] h-[80vw] -translate-y-1/2">
+                                        <img src="src/assets/svg/rotor.svg" alt="" className="rotor object-contain w-full h-full" />
+                                    </div>
+                                </div>
 
-                            </div>
-                            <div className="image-container-2 absolute rotate-10 bottom-[9.4vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
-                                <div className="images-main-2 relative w-full h-full">
-                                    <img src={backgroundMask} alt="" className="mask-2 hidden object-cover absolute top-0 left-0" />
+                                <div className="scroll-text-div absolute top-0 left-0 w-full h-full">
+                                    <div className="scroll-text-content relative w-full h-full">
+
+                                        {
+                                            scrollData.map((item, key) => (<div key={key} className={`scroll-text${key + 1} absolute opacity-0 top-[70vh] right-[10vw] w-[20vw] h-fit p-4`}>
+                                                <h2 className="heading text-[4vw] font-bold mb-3 text-white font-[Poppins]">{item.heading}</h2>
+                                                <p className="text-base text-white leading-relaxed font-light">
+                                                    {item.content}
+                                                </p>
+                                            </div>
+                                            ))
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="text-section2 z-2 relative top-0 right-0 w-full h-full">
-                                <div className="inner-text-1 absolute w-[35vw] h-fit right-[5%] top-[40%] flex flex-col items-start justify-center">
-                                    <h1 className="sub-heading-section2-1 w-fit h-fit text-[1.7vw]">Hello world</h1>
-                                    <p className="paragraph-section2-1 text-[1.3vw]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, sunt, a iure corporis magnam placeat ducimus perspiciatis dicta dolore quia facere ab tenetur reprehenderit officia aliquam dolorem blanditiis commodi dolor.
-                                    </p>
-                                </div>
-                                <div className="inner-text-2 absolute w-[35vw] h-fit left-[5%] top-[40%] flex flex-col items-start justify-center">
-                                    <h1 className="sub-heading-section2-2 w-fit h-fit text-[1.7vw]">Hello world</h1>
-                                    <p className="paragraph-section2-2 text-[1.3vw]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, sunt, a iure corporis magnam placeat ducimus perspiciatis dicta dolore quia facere ab tenetur reprehenderit officia aliquam dolorem blanditiis commodi dolor.
-                                    </p>
-                                </div>
-                                <div className="inner-text-3 absolute w-[35vw] h-fit right-[5%] top-[40%] flex flex-col items-start justify-center">
-                                    <h1 className="sub-heading-section2-3 w-fit h-fit text-[1.7vw]">Hello world</h1>
-                                    <p className="paragraph-section2-3 text-[1.3vw]">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Odit, sunt, a iure corporis magnam placeat ducimus perspiciatis dicta dolore quia facere ab tenetur reprehenderit officia aliquam dolorem blanditiis commodi dolor.
-                                    </p>
+                                <div className="text-section2 z-2 relative top-0 right-0 w-full h-full">
                                 </div>
                             </div>
                         </div>
@@ -366,5 +373,5 @@ const Home = ({ val }) => {
         </>
     )
 }
-
+//#0a060d
 export default Home

@@ -26,8 +26,8 @@ const App = () => {
 
     gsap.fromTo(
       ".nav-buttons",
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.4, delay: 0.1, ease: "power2.out" }
+      { y: 30, opacity: 0, display: "none" },
+      { y: 0, opacity: 1, duration: 0.4, delay: 0.1, ease: "power2.out", display: "flex" }
     );
   };
 
@@ -48,6 +48,7 @@ const App = () => {
     gsap.to(".nav-buttons", {
       y: 30,
       opacity: 0,
+      display: "none",
       duration: 0.3,
       ease: "power1.in",
     });
