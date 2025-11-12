@@ -2,85 +2,81 @@ import { useState } from "react";
 import Home from "./pages/Home";
 import pageData from "./json/pages.json";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 const App = () => {
   const [index, setIndex] = useState(0);
+  const [display, setDisplay] = useState(0);
   const data = pageData;
 
-  const next = () => setIndex((index + 1) % data.length);
-  const prev = () => setIndex((index - 1 + data.length) % data.length);
-
-  // Expand div upward + animate buttons from bottom
-  const expandDiv = () => {
-    gsap.to(".bottom-fixed-container", {
-      height: "16vh", // expands upward
-      duration: 0.4,
-      ease: "power2.out",
-    });
-
-    gsap.to(".bottom-text", {
-      y: -200,
-      duration: 0.4,
-      ease: "power2.out",
-    });
-
-    gsap.fromTo(
-      ".nav-buttons",
-      { y: 30, opacity: 0, display: "none" },
-      { y: 0, opacity: 1, duration: 0.4, delay: 0.1, ease: "power2.out", display: "flex" }
-    );
+  gsap.registerPlugin(ScrollTrigger)
+  const selectedPage = (e) => {
+    setIndex(e);
   };
 
-  // Shrink back down
-  const normalDiv = () => {
+  const next = () => setDisplay((display + 1) % data.length);
+  const prev = () => setDisplay((display - 1 + data.length) % data.length);
+
+
+  useGSAP(() => {
     gsap.to(".bottom-fixed-container", {
-      height: "4.5vh",
-      duration: 0.4,
-      ease: "power2.inOut",
-    });
-
-    gsap.to(".bottom-text", {
-      y: 0,
-      duration: 0.4,
-      ease: "power2.out",
-    });
-
-    gsap.to(".nav-buttons", {
-      y: 30,
-      opacity: 0,
-      display: "none",
-      duration: 0.3,
-      ease: "power1.in",
-    });
-  };
+      y: 500,
+      delay: 1,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".main-div",
+        start: "top+=200vh top",
+        end: "top+=700vh top",
+        markers: true,
+        scrub: {
+          amount: 0.5
+        }
+      }
+    })
+  })
 
   return (
-    <div className="relative">
+    <div className="main-div relative">
       <Home val={data[index]} />
 
       {/* Fixed bottom container */}
-      <div
-        className="bottom-fixed-container w-full h-[4.5vh] fixed bottom-0 left-0 bg-[#ffd8fd] border-[#f0d] border-t z-50 overflow-hidden flex justify-center items-end"
-        onMouseEnter={expandDiv}
-        onMouseLeave={normalDiv}
-      >
-        <div className="bottom-text">Explore More</div>
-        {/* Button container */}
-        <div className="nav-buttons flex gap-6 mb-2 opacity-0 absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2">
-          <button
+      <div className="bottom-fixed-container w-[25vw] h-[32vh] rounded-[10px] overflow-hidden fixed bottom-[3vh] right-[3vw] z-50 flex justify-center items-end">
+        <div className="nav-container bg-transparent relative w-full h-full overflow-hidden flex items-center justify-between">
+
+          {/* Arrows */}
+          <div
+            className="left-arrow absolute left-2 cursor-pointer text-3xl z-10 select-none"
             onClick={prev}
-            className="px-6 py-2 bg-[#b70add] text-white border-none rounded-md cursor-pointer text-lg font-bold hover:bg-[#a10ac8] transition-colors duration-200"
-            style={{ padding: "3px" }}
           >
-            Previous
-          </button>
-          <button
+            <i className="fa-solid fa-circle-chevron-left"></i>
+          </div>
+
+          {/* Slider divs */}
+          <div
+            className="flex transition-transform duration-500 ease-out w-full h-full"
+            style={{
+              transform: `translateX(-${display * 100}%)`,
+              width: `${data.length * 100}%`,
+            }}
+          >
+            {data.map((value, i) => (
+              <div
+                key={i}
+                className="one relative w-full h-full shrink-0"
+                onClick={() => selectedPage(i)}
+              >
+                <img className="nav-image object-cover w-full h-full" src={`src/assets/images/nav-images/BG${i}.png`} alt="" />
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="right-arrow absolute right-2 cursor-pointer text-3xl z-10 select-none"
             onClick={next}
-            className="px-6 py-2 bg-[#b70add] text-white border-none rounded-md cursor-pointer text-lg font-bold hover:bg-[#a10ac8] transition-colors duration-200"
-            style={{ padding: "3px" }}
           >
-            Next
-          </button>
+            <i className="fa-solid fa-circle-chevron-right"></i>
+          </div>
         </div>
       </div>
     </div>

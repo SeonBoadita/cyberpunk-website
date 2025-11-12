@@ -154,7 +154,7 @@ const Home = ({ val }) => {
             {
                 scrollTrigger: {
                     trigger: ".second-section",
-                    markers: true,
+                    // markers: true,
                     scrub: true,
                     pin: true,
                     start: "top-=2.5vh top",
@@ -186,7 +186,7 @@ const Home = ({ val }) => {
         tl.from(".rotor", {
             opacity: 0,
             scale: 0.5,
-            ease: "elastic.out"
+            ease: "elastic.out~"
         }, ">-=0.2");
 
         // console.log(scrollData.length);
@@ -328,7 +328,7 @@ const Home = ({ val }) => {
                             '--selection-text': textColor || '#ffffff'
                         }}
                     >
-                        <div className="section-2-container relative top-0 left-0 w-full h-screen">
+                        <div className="section-2-container bg-[#0a060d] border-[1.5vh] border-e-transparent rounded-t-4xl relative top-0 left-0 w-full h-screen">
                             <div className="section-two-cont relative top-0 left-0 w-full h-full rounded-t-4xl backdrop-blur-2xl bg-[#0a060d] border-t-[1.5vh] border-[#ef26e9] z-1">
                                 <div className="image-container-2 absolute rotate-10 bottom-[9.4vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
                                     <div className="images-main-2 relative w-full h-full">
@@ -360,8 +360,6 @@ const Home = ({ val }) => {
                                             ))
                                         }
                                     </div>
-                                </div>
-                                <div className="text-section2 z-2 relative top-0 right-0 w-full h-full">
                                 </div>
                             </div>
                         </div>
