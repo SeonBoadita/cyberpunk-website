@@ -189,6 +189,7 @@ const Home = ({ val }) => {
             y: -30,
             backgroundColor: "#030306",
         }, "<")
+        tl.fromTo(".light", {opacity: 0}, {opacity: 1})
 
         // 1
         tl.to(".mask-2", {
