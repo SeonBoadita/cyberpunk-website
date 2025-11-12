@@ -1,18 +1,38 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ScrollSmoother } from "gsap/ScrollSmoother"
 import Textani from "../components/Textani"
 import { useGSAP } from "@gsap/react"
 import Scroll from "../components/Scroll"
+import "../App.css"
 import scrollData from "../json/scrollTexts.json"
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 const Home = ({ val }) => {
     const { mainPageHeading, mainPageSideHeading, charactersName, descriptionText, backgroundHuman, backgroundMask, backgroundColor, textColor, selectionColor, mouseColor } = val || {};
 
+    const [x, setX] = useState(50)
+    const [y, setY] = useState(50)
     const smootherRef = useRef(null)
+    const lightDiv = useRef(null)
 
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+
+            const newX = e.clientX
+            const newY = e.clientY
+
+            setX(newX)
+            setY(newY)
+        }
+
+        window.addEventListener("mousemove", handleMouseMove)
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove)
+        }
+    }, [])
 
     useEffect(() => {
         const pointerHandler = (e) => {
@@ -328,8 +348,25 @@ const Home = ({ val }) => {
                             '--selection-text': textColor || '#ffffff'
                         }}
                     >
-                        <div className="section-2-container bg-[#0a060d] border-[1.5vh] border-e-transparent rounded-t-4xl relative top-0 left-0 w-full h-screen">
-                            <div className="section-two-cont relative top-0 left-0 w-full h-full rounded-t-4xl backdrop-blur-2xl bg-[#0a060d] border-t-[1.5vh] border-[#ef26e9] z-1">
+                        <div
+                            ref={lightDiv}
+                            className="light fixed top-0 left-0 w-full h-full z-100 pointer-events-none"
+                            style={{
+                                background: `radial-gradient(
+                                circle 500px at ${x}px ${y}px,
+                                transparent 0px,
+                                transparent 100px,
+                                rgba(0, 0, 0, 0.5) 200px,
+                                rgba(0, 0, 0, 0.7) 300px,
+                                rgba(0, 0, 0, 0.9) 400px,
+                                rgba(0, 0, 0, 1) 500px
+                                )`,
+                                transition: 'background 0.1s ease-out'
+                            }}
+
+                        ></div>
+                        <div className="section-2-container relative top-0 left-0 w-full h-screen">
+                            <div className="section-two-cont relative top-0 left-0 w-full h-full rounded-t-4xl bg-[#0a060d] border-t-[1.5vh] border-[#ef26e9] z-1">
                                 <div className="image-container-2 absolute rotate-10 bottom-[9.4vh] left-[55%] w-[45vw] h-[90vh] transform -translate-x-1/2 z-70">
                                     <div className="images-main-2 relative w-full h-full">
                                         <img src={backgroundMask} alt="" className="mask-2 hidden object-cover absolute top-0 left-0" />
