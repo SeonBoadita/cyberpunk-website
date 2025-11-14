@@ -85,7 +85,7 @@ const Home = ({ val }) => {
                 scale: 1,
                 ease: "elastic.inOut"
             })
-    })
+    }, [val])
 
 
 
@@ -189,7 +189,7 @@ const Home = ({ val }) => {
             y: -30,
             backgroundColor: "#030306",
         }, "<")
-        tl.fromTo(".light", {opacity: 0}, {opacity: 1})
+        tl.fromTo(".light", { opacity: 0 }, { opacity: 1 })
 
         // 1
         tl.to(".mask-2", {
@@ -299,7 +299,7 @@ const Home = ({ val }) => {
                             {/* heading */}
                             <div className="page-heading-container z-2 p-2.5 relative top-0 left-[10vw] w-[20vw] h-full">
                                 <div className="text-container flex items-start absolute justify-around font-black text-[5vw] font-[Orbitron] w-full h-[90vh] top-[5vh]">
-                                    <div className="side-text text-[0.6vw] -rotate-90 relative top-[8vw] w-[10vw] h-fit">
+                                    <div className="side-text text-[0.6vw] -rotate-90 relative top-[8vw] w-[10vw] h-fit" style={{ color: '#000000' }}>
                                         <span className="span-text rotate-90 uppercase">{mainPageSideHeading}</span>
                                     </div>
                                     <div className="svg-heading w-full h-full">
@@ -315,14 +315,14 @@ const Home = ({ val }) => {
 
 
                             {/* name of charecter */}
-                            <div className="charecters-name z-2 absolute top-1/2 left-[3vw] w-[10vw] h-[4vw]">
+                            <div className="charecters-name z-2 absolute top-1/2 left-[3vw] w-[10vw] h-[4vw]" style={{ color: '#000000' }}>
                                 <div className="text-container w-full h-full">
                                     <span>{charactersName}</span>
                                 </div>
                             </div>
 
                             {/* discription */}
-                            <div className="discription upper-text z-2 absolute right-[10vw] w-[10vw] h-[5vw] top-[45%]">
+                            <div className="discription upper-text z-2 absolute right-[10vw] w-[10vw] h-[5vw] top-[45%]" style={{ color: '#000000' }}>
                                 <div className="upper-text-container w-full h-full font-medium tracking-[0.2vw] text-center text-[0.7vw]">
                                     <span>
                                         {descriptionText}
@@ -331,7 +331,7 @@ const Home = ({ val }) => {
                             </div>
 
                             {/* right text */}
-                            <div className="right-text z-2 absolute right-2 w-fit h-fit rotate-90 top-1/2">
+                            <div className="right-text z-2 absolute right-2 w-fit h-fit rotate-90 top-1/2" style={{ color: '#000000' }}>
                                 <div className="right-text-container w-full h-full font-medium text-center text-[1.5vw] tracking-[1.5vw]">
                                     <span>
                                         2025
