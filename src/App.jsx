@@ -28,7 +28,7 @@ const App = () => {
         trigger: ".main-div",
         start: "top+=200vh top",
         end: "top+=700vh top",
-        markers: true,
+        // markers: true,
         scrub: {
           amount: 0.5
         }
