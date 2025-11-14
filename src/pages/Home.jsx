@@ -285,7 +285,7 @@ const Home = ({ val }) => {
             tl.scrollTrigger?.kill()
             tl.kill()
         }
-    }, [val])
+    }, [])
 
 
     return (
