@@ -47,7 +47,7 @@ const Scroll = ({ bgColor }) => {
 
     return (
         <>
-            <div className="container absolute w-[500vw] h-full left-0 top-0">
+            <div className="container absolute w-[500vw] lg:h-full h-[5vh] left-0 lg:top-0 top-[99vh]">
                 <div style={{ padding: "4px 0" }} className={`moving-container transform -translate-x-[500px] ${bgColor} left-0 top-0 w-[500vw] h-full flex gap-10`}>
                     {Array.from({ length: 500 }).map((_, i) => (
                         <img
