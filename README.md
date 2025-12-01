@@ -22,4 +22,4 @@ This project is a modern cyberpunk-style website built using React, Tailwind CSS
 
 ## Setup Instructions
 1. Clone the repository  
-2. Install dependencies
+2. Install dependencies (npm i)
