@@ -1,16 +1,25 @@
-# React + Vite
+# Cyberpunk Website Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a modern cyberpunk-style website built using React, Tailwind CSS, GSAP animations, and custom typography designed in Figma.
 
-Currently, two official plugins are available:
+## Features
+• Built with React for component-based structure  
+• Styled using Tailwind CSS  
+• Smooth animations using GSAP  
+• Custom letter designs created in Figma
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+• React  
+• Tailwind CSS  
+• GSAP  
+• Figma (for creating custom typography)
 
-## React Compiler
+## How the Typography Was Made
+• Letters were designed manually in Figma  
+• Exported as SVG/PNG  
+• Imported into the React project  
+• Used GSAP to animate the letters on load/scroll
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Setup Instructions
+1. Clone the repository  
+2. Install dependencies (npm i)
