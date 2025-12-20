@@ -16,6 +16,7 @@ const Home = ({ val }) => {
     const [y, setY] = useState(50)
     const smootherRef = useRef(null)
     const lightDiv = useRef(null)
+    const responsive = gsap.matchMedia();
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -158,39 +159,86 @@ const Home = ({ val }) => {
 
 
     useGSAP(() => {
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#smooth-content",
-                // markers: true,
-                start: "top top",
-                end: "bottom top",
-                scrub: 1,
+        responsive.add("(max-width:412px)", () => { //phone
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#smooth-content",
+                    // markers: true,
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1,
+                }
+            })
+
+            tl.fromTo(".background-shapes", { opacity: 1 }, { opacity: 0, duration: 2 })
+
+            tl.to([".human", ".scroller-container"], {
+                y: -600,
+                ease: "none",
+            }, "<")
+
+            tl.fromTo(".mask-image", {
+                scale: 1,
+                ease: "none",
+            }, {
+                rotate: 25,
+                duration: 2,
+                scale: 0.7,
+                ease: "none",
+            }, "<")
+
+            tl.to(".mask-image", {
+                x: -40,
+                y: 0,
+                duration: 1.5,
+            }, "-=2")
+
+            return () => {
+                tl.scrollTrigger?.kill()
+                tl.kill()
             }
         })
 
-        tl.fromTo(".background-shapes", { opacity: 1 }, { opacity: 0, duration: 2 })
 
-        tl.to([".human", ".scroller-container"], {
-            y: -600,
-            ease: "none",
-        }, "<")
 
-        tl.to(".mask-image", {
-            rotate: 35,
-            duration: 2,
-            ease: "none",
-        }, "<")
 
-        tl.to(".mask-image", {
-            x: -300,
-            y: -100,
-            duration: 1.5,
-        }, "-=1.9")
 
-        return () => {
-            tl.scrollTrigger?.kill()
-            tl.kill()
-        }
+        responsive.add("(min-width:413px)", () => { //desktop
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#smooth-content",
+                    // markers: true,
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1,
+                }
+            })
+
+            tl.fromTo(".background-shapes", { opacity: 1 }, { opacity: 0, duration: 2 })
+
+            tl.to([".human", ".scroller-container"], {
+                y: -600,
+                ease: "none",
+            }, "<")
+
+            tl.to(".mask-image", {
+                rotate: 35,
+                duration: 2,
+                ease: "none",
+            }, "<")
+
+            tl.to(".mask-image", {
+                x: -300,
+                y: -100,
+                duration: 1.5,
+            }, "-=1.9")
+
+            return () => {
+                tl.scrollTrigger?.kill()
+                tl.kill()
+            }
+        })
+
     }, [val])
 
     useGSAP(() => {
@@ -211,81 +259,151 @@ const Home = ({ val }) => {
     }, [])
 
     useGSAP(() => {
-        const tl = gsap.timeline(
-            {
+
+        const mm = gsap.matchMedia();
+
+        // DESKTOP — SAME AS BEFORE
+        mm.add("(min-width: 412px)", () => {
+
+            const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".second-section",
-                    markers: true,
+                    // markers: true,
                     scrub: 1,
                     pin: true,
                     start: "top top",
                     end: "bottom top",
                 }
-            }
-        )
-        tl.to(".section-two-cont", {
-            y: -30,
-            backgroundColor: "#030306",
-        }, "<")
+            });
 
-        tl.from(".svg-img", {
-            x: -150,
-            opacity: 0,
-            scale: 0.5,
-        }, ">-=0.2");
+            tl.to(".section-two-cont", {
+                y: -30,
+                backgroundColor: "#030306",
+            }, "<");
 
-        tl.from(".rotor", {
-            x: -700,
-            opacity: 0,
-            scale: 0.5,
-            ease: "elastic.out~"
-        }, ">-=0.2");
+            tl.from(".svg-img", {
+                x: -150,
+                opacity: 0,
+                scale: 0.5,
+            }, ">-=0.2");
 
-        // console.log(scrollData.length);
-        for (let i = 1; i <= scrollData.length; i++) {
+            tl.from(".rotor", {
+                x: -700,
+                opacity: 0,
+                scale: 0.5,
+                ease: "elastic.out"
+            }, ">-=0.2");
 
-            tl.fromTo(`.scroll-text${i}`,
-                {
+            for (let i = 1; i <= scrollData.length; i++) {
+
+                tl.fromTo(`.scroll-text${i}`, {
                     y: 0,
                     opacity: 0,
-                },
-                {
+                }, {
                     y: -300,
                     opacity: 1,
                     ease: "power2.inOut",
-                }
-            )
+                });
 
-            tl.fromTo(`.scroll-text${i}`,
-                {
+                tl.fromTo(`.scroll-text${i}`, {
                     x: 0,
                     y: -300,
-                },
-                {
+                }, {
                     x: -300,
                     y: -900,
                     opacity: 0,
                     ease: "power2.inOut",
+                });
+
+                tl.to(".svg-img", {
+                    rotate: `+=${360 / scrollData.length}`,
+                    ease: "power2.inOut"
+                }, "<");
+
+                tl.to(".rotor", {
+                    rotate: `+=${-360 / scrollData.length}`,
+                    ease: "power2.inOut"
+                }, "<");
+            }
+
+            return () => tl.kill();
+        });
+
+
+
+        // PHONE — TEXT COMES FROM RIGHT → LEFT
+        mm.add("(max-width: 411px)", () => {
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".second-section",
+                    // markers: true,
+                    scrub: 1,
+                    pin: true,
+                    start: "top top",
+                    end: "bottom top",
                 }
-            )
+            });
 
-            tl.to(".svg-img", {
-                rotate: `+=${360 / scrollData.length}`,
-                ease: "power2.inOut"
-            }, "<")
+            tl.to(".section-two-cont", {
+                y: -30,
+                backgroundColor: "#030306",
+            }, "<");
 
-            tl.to(".rotor", {
-                rotate: `+=${-360 / scrollData.length}`,
-                ease: "power2.inOut"
-            }, "<")
-        }
+            tl.from(".svg-img", {
+                x: -150,
+                opacity: 0,
+                scale: 0.5,
+            }, ">-=0.2");
 
+            tl.from(".rotor", {
+                x: -700,
+                opacity: 0,
+                scale: 0.5,
+                ease: "elastic.out"
+            }, ">-=0.2");
 
-        return () => {
-            tl.scrollTrigger?.kill()
-            tl.kill()
-        }
-    }, [])
+            for (let i = 1; i <= scrollData.length; i++) {
+
+                // PHONE: ENTER FROM RIGHT
+                tl.fromTo(`.scroll-text${i}`, {
+                    x: 300,     // comes from RIGHT
+                    y: 0,
+                    opacity: 0,
+                }, {
+                    x: 0,
+                    y: -300,
+                    opacity: 1,
+                    ease: "power2.inOut",
+                });
+
+                // then EXIT LEFT
+                tl.fromTo(`.scroll-text${i}`, {
+                    x: 0,
+                    y: -300,
+                }, {
+                    x: -900,
+                    y: -900,
+                    opacity: 0,
+                    ease: "power2.inOut",
+                });
+
+                tl.to(".svg-img", {
+                    rotate: `+=${360 / scrollData.length}`,
+                    ease: "power2.inOut"
+                }, "<");
+
+                tl.to(".rotor", {
+                    rotate: `+=${-360 / scrollData.length}`,
+                    ease: "power2.inOut"
+                }, "<");
+            }
+
+            return () => tl.kill();
+        });
+
+    }, []);
+
 
 
     return (
@@ -400,30 +518,31 @@ const Home = ({ val }) => {
                                 className="light fixed top-0 left-0 w-full h-full z-100 pointer-events-none opacity-0"
                                 style={{
                                     background: `radial-gradient(
-                                    circle ${window.innerWidth < 640 ? 150 : 500}px at ${x}px ${y}px,
-                                    transparent 0px,
-                                    transparent ${window.innerWidth < 640 ? 40 : 100}px,
-                                    rgba(0, 0, 0, 0.5) ${window.innerWidth < 640 ? 120 : 400}px,
-                                    rgba(0, 0, 0, 0.7) ${window.innerWidth < 640 ? 180 : 600}px,
-                                    rgba(0, 0, 0, 0.9) ${window.innerWidth < 640 ? 220 : 700}px,
-                                    rgba(0, 0, 0, 0.95) ${window.innerWidth < 640 ? 260 : 800}px,
-                                    rgba(0, 0, 0, 1) ${window.innerWidth < 640 ? 300 : 1000}px
+                                    circle ${window.innerWidth < 640 ? 120 : 350}px at ${x}px ${y}px,
+                                    rgba(0, 0, 0, 0) 0px,
+                                    rgba(0, 0, 0, 0) ${window.innerWidth < 640 ? 20 : 60}px,
+                                    rgba(0, 0, 0, 0.4) ${window.innerWidth < 640 ? 90 : 250}px,
+                                    rgba(0, 0, 0, 0.6) ${window.innerWidth < 640 ? 140 : 320}px,
+                                    rgba(0, 0, 0, 0.8) ${window.innerWidth < 640 ? 170 : 400}px,
+                                    rgba(0, 0, 0, 0.9) ${window.innerWidth < 640 ? 200 : 450}px,
+                                    rgba(0, 0, 0, 1) ${window.innerWidth < 640 ? 250 : 550}px
                                 )`,
                                     transition: "background 0.1s ease-out"
                                 }}
                             ></div>
 
+
                             <div className="section-2-container relative top-0 left-0 w-full h-[105vh]">
                                 <div className="section-two-cont relative top-0 left-0 lg:w-full w-full h-full rounded-t-4xl border-t-[1.5vh] border-[#ef26e9] bg-[#0a060d] z-1">
 
                                     <div className="circle-svg z-2 relative top-0 right-0 w-full h-full">
-                                        <div className="svg-container absolute top-[50vh] left-[15vw] w-[30vw] h-[30vw] -translate-y-1/2">
+                                        <div className="svg-container absolute top-[78vh] lg:top-[50vh] lg:left-[15vw] left-[5vw] lg:w-[30vw] w-[60vw] h-[60vw] lg:h-[30vw] -translate-y-1/2">
                                             <img src="src/assets/svg/BackgroundCircles01.svg" alt="svg-img" className="svg-img w-full h-full object-cover" />
                                         </div>
                                     </div>
 
-                                    <div className="circle-rotate absolute top-0 left-0 w-full h-full z-50 pointer-events-none">
-                                        <div className="rotor-container absolute top-1/2 right-[35vw] w-[80vw] h-[80vw] -translate-y-1/2">
+                                    <div className="circle-rotate absolute lg:top-0 top-[25vh] left-[5vw] w-full h-full z-50 pointer-events-none">
+                                        <div className="rotor-container absolute top-1/2 lg:right-[35vw] right-[20vw] lg:w-[80vw] lg:h-[80vw] w-screen h-screen -translate-y-1/2">
                                             <img src="src/assets/svg/rotor.svg" alt="" className="rotor object-contain w-full h-full" />
                                         </div>
                                     </div>
@@ -432,9 +551,9 @@ const Home = ({ val }) => {
                                         <div className="scroll-text-content relative w-full h-full">
 
                                             {
-                                                scrollData.map((item, key) => (<div key={key} className={`scroll-text${key + 1} absolute opacity-0 top-[70vh] right-[10vw] w-[20vw] h-fit`}>
-                                                    <h2 className="heading text-[4vw] font-bold mb-3 text-white font-[Poppins]">{item.heading}</h2>
-                                                    <p className="text-base text-white leading-relaxed font-light">
+                                                scrollData.map((item, key) => (<div key={key} className={`scroll-text${key + 1} absolute opacity-0 lg:top-[70vh] top-[60vh] right-[10vw] lg:w-[20vw] w-[70vw] h-fit`}>
+                                                    <h2 className="heading lg:text-[2vw] text-[4vw] font-bold mb-3 text-white font-[Poppins]">{item.heading}</h2>
+                                                    <p className="text-base text-white lg:text-[1.5vw] text-[2.5vw] leading-relaxed font-light">
                                                         {item.content}
                                                     </p>
                                                 </div>
